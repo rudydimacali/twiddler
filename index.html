@@ -13,21 +13,25 @@
     </div>
     <script>
       $(document).ready(function(){
+        // Declare Body and Body CSS
         var $body = $('body');
-        // body css
         $body.css("background-color", "white").css('display', 'grid').css('grid-template-columns', '1fr 2fr 1fr 2fr 1fr');
-
+        // Declare div $tweets and tweets CSS
         var $tweets = $('#tweets');
         $tweets.css('color', '#1DA1F2').css('grid-column-start', '2').css('grid-column-end', '5');
+        // Declare div $userProfile and userProfile CSS
+        var $userProfile = $('#userProfile');
+        $userProfile.css('color', '#1DA1F2').css('grid-column-start', '2').css('grid-column-end', '5')
 
         var $userProfile = $('#userProfile');
         var index = streams.home.length - 1;
-        var profileAnchor = '<a id = '
+
+
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text(tweet.created_at + ' @' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($tweets);
+          $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
+          $tweet.clone().appendTo($tweets);
           index -= 1;
         }
 
@@ -39,30 +43,30 @@
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.text(tweet.created_at + ' @' + tweet.user + ': ' + tweet.message);
+            $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
             $tweet.clone().appendTo($tweets);
             index -= 1;
-          }
-          }
-        ).css('grid-column-start', '3').css('grid-column-end', '4').css("background-color", "#1DA1F2").css("color", "white");
+            }
+          }).css('grid-column-start', '3').css('grid-column-end', '4').css("background-color", "#1DA1F2").css("color", "white");
 
-        //Load Profile Function
-        var loadProfile = function() {
+        //Load Profile Click + Function
+        $(document).on('click', '#userAnchor', function() {
           document.getElementById('tweets').innerHTML = '';
           document.getElementById('userProfile').innerHTML = '';
           var index = streams.home.length - 1;
+          var clickedUser = $(this).text();
           while (index >= 0) {
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            if (tweet.user = test) {
-              $tweet.text(tweet.created_at + ' @' + tweet.user + ': ' + tweet.message);
+            if (tweet.user == clickedUser) {
+              $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
               $tweet.clone().appendTo($userProfile);
-            index -= 1;
             }
+            index -= 1;
           }
-        };
-
+        });
       });
+      
     </script>
   </body>
 </html>

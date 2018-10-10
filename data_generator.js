@@ -64,7 +64,7 @@ var writeTweet = function(message){
   if(!visitor){
     throw new Error('set the global visitor property!');
   }
-  if(arguments.length == 1) {
+  if(arguments.length === 1) {
     tweet.user = visitor;
   } else {
     tweet.user = arguments[1];

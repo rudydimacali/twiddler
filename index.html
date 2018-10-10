@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Rudy's Twiddler</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
-    <script src="node_modules/date-fns/index.js"></script>
   </head>
   <body>
-    <button type = "button" id = "refresh">Refresh Feed</button>
+    <div>
+      <button type = "button" id = "refresh">Refresh Home Feed</button>
+    </div>
+    <br><br>
     <div id='tweets'>
     </div>
     <div id='userProfile'>
@@ -15,22 +19,18 @@
       $(document).ready(function(){
         // Declare Body and Body CSS
         var $body = $('body');
-        $body.css("background-color", "white").css('display', 'grid').css('grid-template-columns', '1fr 2fr 1fr 2fr 1fr');
         // Declare div $tweets and tweets CSS
         var $tweets = $('#tweets');
-        $tweets.css('color', '#1DA1F2').css('grid-column-start', '2').css('grid-column-end', '5');
         // Declare div $userProfile and userProfile CSS
         var $userProfile = $('#userProfile');
-        $userProfile.css('color', '#1DA1F2').css('grid-column-start', '2').css('grid-column-end', '5')
 
-        var $userProfile = $('#userProfile');
         var index = streams.home.length - 1;
 
 
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
+          $tweet.html('<div id = "tweet"><a id = "userAnchor">@' + tweet.user + '</a>&nbsp&nbsp&nbsp•&nbsp&nbsp&nbsp<div id = "date">' + tweet.created_at + '</div>' + '<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp' + tweet.message + '</div>');
           $tweet.clone().appendTo($tweets);
           index -= 1;
         }
@@ -43,28 +43,29 @@
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
+            $tweet.html('<div id = "tweet"><a id = "userAnchor">@' + tweet.user + '</a>&nbsp&nbsp&nbsp•&nbsp&nbsp&nbsp<div id = "date">' + tweet.created_at + '</div>' + '<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp' + tweet.message + '</div>');
             $tweet.clone().appendTo($tweets);
             index -= 1;
             }
-          }).css('grid-column-start', '3').css('grid-column-end', '4').css("background-color", "#1DA1F2").css("color", "white");
+          })
 
         //Load Profile Click + Function
         $(document).on('click', '#userAnchor', function() {
           document.getElementById('tweets').innerHTML = '';
           document.getElementById('userProfile').innerHTML = '';
           var index = streams.home.length - 1;
-          var clickedUser = $(this).text();
+          var clickedUser = $(this).text().split("@").join("");
           while (index >= 0) {
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
             if (tweet.user == clickedUser) {
-              $tweet.html(tweet.created_at + ' @' + '<a id = "userAnchor">' + tweet.user + '</a>' + ': ' + tweet.message);
-              $tweet.clone().appendTo($userProfile);
+              $tweet.html('<div id = "tweet"><a id = "userAnchor">@' + tweet.user + '</a>&nbsp&nbsp&nbsp•&nbsp&nbsp&nbsp<div id = "date">' + tweet.created_at + '</div>' + '<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp' + tweet.message + '</div>');
+              $tweet.clone().appendTo($tweets);
             }
             index -= 1;
           }
         });
+
       });
       
     </script>

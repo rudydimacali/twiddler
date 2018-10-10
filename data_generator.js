@@ -3,7 +3,7 @@
  * NOTE: This file generates fake tweet data, and is not intended to be part of your implementation.
  * You can safely leave this file untouched, and confine your changes to index.html.
  */
-
+var visitor = "visitor";
 var format = require('date-fns/format')
 // set up data structures
 window.streams = {};
@@ -64,9 +64,14 @@ var writeTweet = function(message){
   if(!visitor){
     throw new Error('set the global visitor property!');
   }
+  if(arguments.length == 1) {
+    tweet.user = visitor;
+  } else {
+    tweet.user = arguments[1];
+  }
   var tweet = {};
-  tweet.user = visitor;
   tweet.message = message;
+  tweet.created_at = format(new Date(), 'h:mm A - DD MMM YYYY');
   addTweet(tweet);
 };
 

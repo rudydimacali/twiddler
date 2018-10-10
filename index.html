@@ -10,7 +10,13 @@
     <div>
       <button type = "button" id = "refresh">Refresh Home Feed</button>
     </div>
-    <br><br>
+    <br><br><br>
+    <form id = newTweetBox>Username:<br>@
+      <input type="text" id="username"><br><br>
+      Tweet:<br>
+      <textarea type="text" id="userTweet"></textarea><br><br>
+      <button type="button" id="sendTweet">Tweet!</button>
+    </form>
     <div id='tweets'>
     </div>
     <div id='userProfile'>
@@ -64,6 +70,22 @@
             }
             index -= 1;
           }
+        });
+
+        $("#sendTweet").click(function() {
+          var newTweetUser = document.getElementById('username').value;
+          var newTweetMessage = document.getElementById('userTweet').value;
+          writeTweet(newTweetMessage, newTweetUser);
+          document.getElementById('tweets').innerHTML = '';
+          document.getElementById('userProfile').innerHTML = '';
+          var index = streams.home.length - 1;
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.html('<div id = "tweet"><a id = "userAnchor">@' + tweet.user + '</a>&nbsp&nbsp&nbsp•&nbsp&nbsp&nbsp<div id = "date">' + tweet.created_at + '</div>' + '<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp' + tweet.message + '</div>');
+            $tweet.clone().appendTo($tweets);
+            index -= 1;
+            }
         });
 
       });
